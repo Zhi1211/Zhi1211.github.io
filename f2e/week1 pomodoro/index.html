@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Pomodoro</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+    <div class="container" id="container">
+        <div class="main">
+            <div class="header">
+                <p class="title">Pomodoro</p>
+                <p class="time">{{ now }}</p>
+            </div>
+            <div class="content">
+                <div class="circle">
+                    <div class="halfCircle1">
+                        <div class="timer">{{ countDown.time }}</div>
+                    </div>
+                    <div class="halfCircle2">
+                        <div class="scale1"></div>
+                        <div class="scale2"></div>
+                        <div class="scale3"></div>
+                        <div class="scale4"></div>
+                        <canvas class="movement" id="movement" width="250px" height="495px"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="buttoms">
+                <ion-icon class="x" name="close-circle-outline" @click="countDownProcess('STOP')"></ion-icon>
+                <div class="start" @click="countDown.isPaused? countDownProcess('START'):countDownProcess('PAUSE')" @click="draw">{{ countDown.status }}</div>
+                <ion-icon class="refresh" name="refresh" @click="countDownProcess('RESET')"></ion-icon>
+            </div>
+        </div>
+        <div class="cirs">
+            <div class="cir"></div>
+            <div class="cir"></div>
+            <div class="cir"></div>
+            <div class="cir"></div>
+            <div class="cir"></div>
+        </div>
+        <div class="firstTaskToday" v-if="showPanel===''">
+            <h1>First Task Today
+                <ion-icon name="arrow-dropdown-circle"></ion-icon>
+            </h1>
+            <div class="note">
+                <div>{{ nowProcess.title }}</div>
+                {{ nowProcess.content }}
+            </div>
+        </div>
+        <div class="centerBar">
+            <div class="block" @click="showPanel='todoList'">
+                <ion-icon class="icon" name="list-box" width="40px" height="40px">
+                </ion-icon>
+            </div>
+            <div class="block" @click="showPanel='report'">
+                <ion-icon class="icon" name="analytics"></ion-icon>
+            </div>
+            <div class="block" @click="showPanel='bgm'">
+                <ion-icon class="icon" name="musical-notes"></ion-icon>
+            </div>
+            <div class="block" @click="showPanel=''">
+                <ion-icon class="icon" name="arrow-dropright"></ion-icon>
+            </div>
+        </div>
+        <div class="sidePanel" id="todoList" v-if="showPanel === 'todoList'">
+            <input class="addTask" type="text" placeholder="  Add a new task..." v-model="newTodo"
+                @keyup.enter="addTodo">
+            <div class="today">
+                <h2>Today</h2>
+                <div class="divide"></div>
+                <div class="taskList">
+                    <ul style="list-style: none; width: 450px;" v-for="todo in todos">
+                        <li class="task"> 
+                            <div class="play">
+                                <ion-icon class="play" name="arrow-dropright-circle"></ion-icon>
+                            </div>
+                            <span>
+                                {{ todo.title }}
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="upcoming">
+                <h2>Upcoming</h2>
+                <div class="divide"></div>
+                <div class="taskList">
+                    <ul style="list-style: none; width: 450px;" v-for="upcoming in upcomings">
+                        <li class="task">
+                            <div class="play">
+                                <ion-icon class="play" name="arrow-dropright-circle"></ion-icon>
+                            </div>
+                            <span>
+                                {{ upcoming.title }}
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="sidePanel" id="report" v-if="showPanel === 'report'">
+            <h1>Report施工中...</h1>
+        </div>
+        <div class="sidePanel" id="bgm" v-if="showPanel === 'bgm'">
+            <h1>BGM施工中...</h1>
+        </div>
+    </div>
+    <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.js"></script>
+    <script src="action.js"></script>
+</body>
+
+</html>
+
+
+
+
+<!-- https://ionicons.com/ Font Avenir Next White noise http://whitenoisemp3s.com/ Alarm http://www.orangefreesounds.com/ -->

@@ -1,0 +1,343 @@
+body {
+    width: 1920px;
+    height: 1080px;
+    margin: 0px;
+    padding: 0px;
+    background-color: #F7F5F1;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.main {
+    width: 1242px;
+    height: 1080px;
+}
+.header {
+    display: flex;
+}
+.header > p {
+    color: #003CA1;
+    font-size: 35px;
+    font-family: "Avenir Next";
+}
+.title {
+    position: absolute;
+    top: 48px;
+    left: 74px;
+    font-weight: bold;
+}
+.time {
+    position: absolute;
+    top: 48px;
+    left: 733px;
+}
+
+.content {
+    display: flex;
+    position: absolute;
+    top: 209px;
+    left: 228px;
+}
+.circle {
+    /* border: 1px solid black; */
+    width: 586.02px;
+    height: 649.43px;
+    display: flex;
+}
+.halfCircle1 {
+    border: 3px solid#003CA1;
+    width: 300.88px;
+    height: 602px;
+    border-bottom-left-radius: 602px;
+    border-top-left-radius: 602px;
+    box-shadow: 0px 10px 6px rgb(211, 211, 211)
+}
+.halfCircle2 {
+    width: 234.16px;
+    height: 469.45px;
+    background-color: #003CA1;
+    margin-top: 66.74px;
+    border-top-right-radius: 469.45px;
+    border-bottom-right-radius: 469.45px;
+    box-shadow: 0px 6px 3px rgb(192, 191, 191);
+}
+.scale1 {
+    position: absolute;
+    width: 20px;
+    height: 5px;
+    background-color: white;
+    top:120px;
+    right:180px;
+    transform: rotate(-55deg)
+}
+.scale2 {
+    position: absolute;
+    width: 20px;
+    height: 5px;
+    background-color: white;
+    top:200px;
+    right:100px;
+    transform: rotate(-35deg)
+}
+.scale3 {
+    position: absolute;
+    width: 20px;
+    height: 5px;
+    background-color: white;
+    top:300px;
+    right:80px;
+}
+.scale4 {
+    position: absolute;
+    width: 20px;
+    height: 5px;
+    background-color: white;
+    top:420px;
+    right:115px;
+    transform: rotate(-145deg)
+}
+.movement {
+    position: absolute;
+    top: 55px;
+    /* border: #003CA1 1px solid; */
+    /* margin-top: 234.16px;
+    border-radius: 0 0 248px 0;
+    background: rgba(240, 236, 233, 0.712);
+    border-top: 3px solid #003CA1;
+    border-right: 3px solid #003CA1;
+    border-bottom: 3px solid #003CA1; */
+}
+.timer {
+    line-height: 602px;
+    font-size: 89px;
+    font-family: "Avenir Next";
+    color: #003CA1;
+    font-weight: 300;
+    margin-left: 31.65px;
+}
+.buttoms {
+    display: flex;
+    /* border: 1px solid red; */
+    position: absolute;
+    top: 884px;
+    left: 281px;
+    height: 69px;
+}
+.x {
+    color: #003CA1;
+    width: 55px;
+    height: 55px;
+    margin-right: 45px;
+    margin-top: 7px;
+}
+.start {
+    cursor: pointer;
+    border: 3px solid #003CA1;
+    color: #003CA1;
+    border-radius: 10px;
+    width: 260px;
+    height: 66px;
+    margin-right: 40.5px;
+    font-size: 40px;
+    font-family: "Avenir Next";
+    font-weight: bold;
+    line-height: 66px;
+    text-align: center;
+}
+.refresh {
+    color: #003CA1;
+    width: 53px;
+    height: 53px;
+    margin-top: 8px;
+}
+.cirs {
+    /* border: 1px solid blue; */
+    position: absolute;
+    top: 280px;
+    left: 932px;
+    width: 55.67px;
+}
+.cir {
+    background-color: #003CA1;
+    border: #003CA1 solid 3px;
+    width: 49.67px;
+    height: 49.67px;
+    border-radius: 50%;
+    margin-bottom:45.78px;
+}
+.cir:nth-child(5){
+    background-color:white;
+}
+.firstTaskToday {
+    position: absolute;
+    top:470px;
+    left: 1140px;
+}
+.firstTaskToday > h1 {
+    margin: 0px 60px;
+    font-size: 50px;
+    font-family: "Avenir Next";
+    font-weight: 600;
+    color: #003CA1;
+    text-align: center;
+}
+.note {
+    width: 483px;
+    height: 363px;
+    padding: 41px 35px;
+    background-color: #FFFFFF;
+    box-shadow: 0px 6px 6px #dadada;
+    font-size: 30px;
+    color: #003CA1;
+}
+
+
+.centerBar {
+    /* border: 1px solid blue; */
+    /* position: absolute; */
+    left: 1243px;
+    width: 140px;
+    height:1080px;
+    background-color: #2A56A5;
+}
+
+.sidePanel {
+    /* position: absolute; */
+    left: 1383px;
+    width: 538px;
+    height: 1080px;
+    /* border: 1px solid rgb(255, 102, 0); */
+}
+.addTask {
+    margin-top: 29px;
+    margin-left: 41px;
+    border: #2A56A5 solid 3px;
+    border-radius: 3px;
+    width: 468px;
+    height: 77px;
+    line-height: 77px;
+    font-size: 35px;
+    font-family: "Avenir Next";
+    color: #003CA1;
+    font-weight: 500;
+    margin-left: 25px;
+}
+.today {
+    /* border: black solid 1px; */
+    width: 538px;
+}
+.today > h2 {
+    margin-left: 63px;
+    font-weight: 500;
+    color: #003CA1;
+    font-size: 40px;
+    margin-bottom: 17.5px;
+} 
+.divide {
+    background-color:#003CA1;
+    width: 426px;
+    height: 5px;
+    margin: 0px auto;
+}
+.taskList {
+    /* margin-left: 64.53px; */
+    margin-top: 37.5px;
+    color: #003CA1;
+}
+.taskList > ul {
+    list-style: none;
+    width: 450px;
+    margin-left: 20px;
+}
+
+.task {
+    display: flex;
+    font-size: 35px;
+    font-family: "Avenir Next";
+}
+.play{
+    width: 36px;
+    height: 36px;
+    margin: 3px 10px 0 0;
+}
+.upcoming {
+    /* border: black solid 1px; */
+    width: 538px;
+}
+.upcoming > h2 {
+    margin-left: 63px;
+    font-weight: 500;
+    color: #5980C3;
+    font-size: 40px;
+    margin-bottom: 17.5px;
+} 
+
+.upcoming > div {
+    color: #5980C3;
+}
+
+.upcoming > .divide {
+    background-color: #5980C3;
+}
+.icon {
+    display: flex;
+    color: #F5F1EE;
+    margin: 0 auto;
+    margin-bottom: 70px;
+}
+
+.centerBar > div {
+    height: 79px;
+    margin-top: 29px;
+    display: flex;
+}
+
+
+ion-icon {
+    cursor: pointer;
+}
+
+.block {
+    cursor: pointer;
+    /* border: white 1px solid; */
+    padding-top: 25px;
+    width: 140px;
+    height: 10px;
+}
+
+.block:hover {
+   box-shadow: rgba(196, 196, 196, 0.384) 0px 3px 3px,  rgba(196, 196, 196, 0.384) 0px -3px 3px;
+}
+
+/* ion-icon:hover {
+    cursor: pointer;
+    background-color: #F1EDE6;
+    color: #003CA1;
+    color:#00BFFF;
+} */
+
+ion-icon[name="list-box"] {
+    /* margin-top: 21px; */
+    width: 53px;
+    height: 53px;
+}
+ion-icon[name="analytics"] {
+    width: 46px;
+    height: 46px;
+}
+ion-icon[name="musical-notes"] {
+    width: 50px;
+    height: 50px;
+}
+
+ion-icon[name="arrow-dropright"] {
+    width: 50px;
+    height: 50px;
+}
+
+ion-icon[name="arrow-dropdown-circle"] {
+    margin-top: 10px;
+}

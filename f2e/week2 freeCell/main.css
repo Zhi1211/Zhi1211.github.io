@@ -1,0 +1,189 @@
+body {
+    width: 1280px;
+    /* height: 800px; */
+    margin: 0;
+    padding: 0;
+    background-color: #243037;
+    margin: 20px auto;
+}
+
+/* first scene */
+.start {
+    width: 1280px;
+}
+.upper {
+    position: relative;
+    width: 1280px;
+    height: 480px;
+    background-color: white;
+}
+.upperImg {
+    display: flex;
+    justify-content: space-between;
+    z-index: 0;
+}
+.freecell {
+    position: absolute;
+    font-family: "NiagaraEngraved-Reg";
+    font-size: 90px;
+    color: #E37F45;
+    z-index: 1;
+    top: 110px;
+    margin-left: 536.5px;
+}
+.king {
+    position: relative;
+    right: 0;
+}
+
+.bottom {   
+    cursor: pointer;
+    position: relative;
+    z-index: 2;
+    width: 1280px;
+    height: 320px;
+    background-color: #E37F45;
+    display: flex;
+}
+.bottom > div {
+    margin: 0 auto;
+    font-family: "Swiss721BT-LightCondensed";
+    font-size: 60px;
+    color: white;
+    line-height: 320px;
+}
+ 
+
+/* play the game */
+.play {
+    margin-top: 10px;
+    width: 1280px;
+    height: 800px;
+    border: 1px solid white;
+}
+
+.card {
+    border-radius: 15px;
+    width: 109px;
+    height: 176.5px;
+    box-shadow: -1px -1px 1px #2430375e;
+    /* background-color: white; */
+}
+.outline {
+    border: 1px solid;
+}
+.upperRow {
+    width: 1280px;
+    display: flex;
+    justify-content: space-evenly;
+}
+.pile {
+    margin: 0 10px;
+    width: 600px;
+    /* border: 1px solid white; */
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 60px;
+}
+.orange {
+    border-color: #E37F45;
+}
+.blue {
+    border-color: #83A8BD;
+}
+.playArea {
+    width: 1280px;
+    display: flex;
+    justify-content: space-evenly;
+}
+.downPile {
+    margin-top: 30px;
+    display: flex;
+    width: 1280px;
+    height: 320px;
+    justify-content: space-evenly;
+}
+.footer {
+    position: relative;
+    top: 70px;
+}
+.content {
+    display: flex;
+}
+hr {
+    position: relative;
+    width: 1200px;
+    border-top: 1px solid #E37F45;
+}
+.smallTitle {
+    font-family: "NiagaraEngraved-Reg";
+    font-size: 48px;
+    color: #E37F45;
+    margin-left: 40px;
+}
+.text {
+    font-family: "Swiss721BT-LightCondensed";
+    font-size: 24px;
+    margin: 20px 0px 0px 30px;
+    color: #83A8BD;
+    cursor: pointer;
+}
+.time {
+    margin-right: 598px;
+}
+
+.view {
+    z-index: 1;
+    position: relative;
+    bottom: 600px;
+    left: 125px;
+    border: #E37F45 8px solid;
+    border-radius: 50px;
+    width: 1022px;
+    height: 394px;
+    background-color: white;
+    display: flex;
+}
+.right {
+    font-family: "Swis721 LtCn BT";
+    color: #E37F45;
+}
+.subTitle {
+    font-size: 60px;
+    margin: 25px 0;
+}
+.rule {
+    width: 457px;
+    font-size: 16px;
+}
+.back {
+    font-size: 48px;
+    font-weight: 200;
+    width: 300px;
+    color: #83A8BD;
+    font-family: "Swis721 LtCn BT";
+    position: relative;
+    top: -610px;
+    left: 180px;
+    cursor: pointer;
+}
+.restart {
+    font-size: 48px;
+    font-family: "Swis721 LtCn BT";
+    color: #E37F45;
+    margin: 80px 0 0 50px;
+}
+.restart > div {
+    margin-bottom: 30px;
+    cursor: pointer;
+}
+ul,li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.coll {
+    /* display: block; */
+    height: 30px;
+}
