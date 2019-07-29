@@ -158,7 +158,10 @@ const app = new Vue({
 
     },
     watch: {
-
+        start: function () {
+            const vm = this
+            vm.randomCard()
+        }
     }
 })
 function pushList(vm, cardList, num) {
