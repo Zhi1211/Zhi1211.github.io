@@ -11,7 +11,7 @@
 
 <body>
     <div id="main">
-        <div class="start">
+        <div class="start" v-if="start === false">
             <div class="upper">
                 <div class="upperImg">
                     <div class="queen">
@@ -23,7 +23,7 @@
                 </div>
                 <div class="freecell">FREECELL</div>
             </div>
-            <div class="bottom">
+            <div class="bottom" @click=" start = true">
                 <div>START
                     <svg xmlns="http://www.w3.org/2000/svg" width="19" height="45" viewBox="0 0 19 45">
                         <path id="路徑_2" data-name="路徑 2" d="M0,0,16,21,0,42" transform="translate(1.5 1.5)" fill="none"
@@ -43,7 +43,7 @@
                 </div>
             </div>
         </div>
-        <div class="play">
+        <div class="play" v-if="start === true">
             <div class="filter" v-if="view !== ''"></div>
             <div class="upperRow">
                 <div class="pile">
@@ -53,7 +53,8 @@
                     <div class="card orange outline" @drop="drop($event)" @dragenter.prevent="" @dragover.prevent></div>
                 </div>
                 <div class="pile">
-                    <div class="card blue outline" id="spade" @drop="sortDrop($event)" @dragenter.prevent="" @dragover.prevent>
+                    <div class="card blue outline" id="spade" @drop="sortDrop($event)" @dragenter.prevent=""
+                        @dragover.prevent>
                         <?xml version="1.0" encoding="UTF-8"?>
                         <svg width="110px" height="177px" viewBox="0 0 110 177" version="1.1" v-if="spade === 1"
                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -75,7 +76,8 @@
                             </g>
                         </svg>
                     </div>
-                    <div class="card blue outline" id="heart" @drop="sortDrop($event)" @dragenter.prevent="" @dragover.prevent>
+                    <div class="card blue outline" id="heart" @drop="sortDrop($event)" @dragenter.prevent=""
+                        @dragover.prevent>
                         <?xml version="1.0" encoding="UTF-8"?>
                         <svg width="110px" height="177px" viewBox="0 0 110 177" version="1.1" v-if="heart == 14"
                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -91,7 +93,8 @@
                             </g>
                         </svg>
                     </div>
-                    <div class="card blue outline" id="diamond" @drop="sortDrop($event)" @dragenter.prevent="" @dragover.prevent>
+                    <div class="card blue outline" id="diamond" @drop="sortDrop($event)" @dragenter.prevent=""
+                        @dragover.prevent>
                         <?xml version="1.0" encoding="UTF-8"?>
                         <svg width="110px" height="177px" viewBox="0 0 110 177" version="1.1" v-if="diamond === 27"
                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -107,7 +110,8 @@
                             </g>
                         </svg>
                     </div>
-                    <div class="card blue outline" id="club" @drop="sortDrop($event)" @dragenter.prevent="" @dragover.prevent>
+                    <div class="card blue outline" id="club" @drop="sortDrop($event)" @dragenter.prevent=""
+                        @dragover.prevent>
                         <?xml version="1.0" encoding="UTF-8"?>
                         <svg width="110px" height="177px" viewBox="0 0 110 177" version="1.1" v-if="club === 40"
                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -141,9 +145,9 @@
                     <ul class="coll" v-for="(list, index) in randomList" :id="'coll'+index">
                         <li class="coll" v-for="(card, index) in list" :id="card">
                             <img class="card orange" :src="imgPrefix+card+imgSuffix"
-                                :draggable="index+1 === list.length"
-                                @dragstart="startDragging($event,card)" @drop="dropAnotherCol($event)"
-                                @dragenter.prevent="" @dragover.prevent @dragend="updateCardLists">
+                                :draggable="index+1 === list.length" @dragstart="startDragging($event,card)"
+                                @drop="dropAnotherCol($event)" @dragenter.prevent="" @dragover.prevent
+                                @dragend="updateCardLists">
                         </li>
                     </ul>
                 </div>

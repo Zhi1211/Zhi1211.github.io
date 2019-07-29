@@ -1,6 +1,7 @@
 const app = new Vue({
     el: "#main",
     data: {
+        start: false,
         view: '',
         randomList: [],
         indexOfList: 0,
