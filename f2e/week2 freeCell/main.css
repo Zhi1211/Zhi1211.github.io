@@ -1,3 +1,18 @@
+@font-face {
+    font-family: 'NiagaraEngraved-Reg';
+    src: url('resource/fonts/NIAGENG.TTF') format("truetype");
+    }
+
+@font-face {
+    font-family: 'Swiss721BT-LightCondensed';
+    src: url('resource/fonts/Swiss721BT-LightCondensed.otf') format("opentype");
+    }
+@font-face {
+    font-family: 'Swis721 LtCn BT';
+    src: url('resource/fonts/swiss 721 LT CN BTl.ttf') format("truetype");
+    }
+    
+
 body {
     width: 1280px;
     /* height: 800px; */
