@@ -53,9 +53,9 @@
                     <div class="card orange outline" @drop="drop($event)" @dragenter.prevent="" @dragover.prevent></div>
                 </div>
                 <div class="pile">
-                    <div class="card blue outline">
+                    <div class="card blue outline" id="spade" @drop="sortDrop($event)" @dragenter.prevent="" @dragover.prevent>
                         <?xml version="1.0" encoding="UTF-8"?>
-                        <svg width="110px" height="177px" viewBox="0 0 110 177" version="1.1"
+                        <svg width="110px" height="177px" viewBox="0 0 110 177" version="1.1" v-if="spade === 1"
                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                             <!-- Generator: Sketch 55.1 (78136) - https://sketchapp.com -->
                             <title>card-01copy</title>
@@ -75,9 +75,9 @@
                             </g>
                         </svg>
                     </div>
-                    <div class="card blue outline">
+                    <div class="card blue outline" id="heart" @drop="sortDrop($event)" @dragenter.prevent="" @dragover.prevent>
                         <?xml version="1.0" encoding="UTF-8"?>
-                        <svg width="110px" height="177px" viewBox="0 0 110 177" version="1.1"
+                        <svg width="110px" height="177px" viewBox="0 0 110 177" version="1.1" v-if="heart == 14"
                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                             <!-- Generator: Sketch 55.1 (78136) - https://sketchapp.com -->
                             <title>card-14copy</title>
@@ -91,11 +91,11 @@
                             </g>
                         </svg>
                     </div>
-                    <div class="card blue outline">
+                    <div class="card blue outline" id="diamond" @drop="sortDrop($event)" @dragenter.prevent="" @dragover.prevent>
                         <?xml version="1.0" encoding="UTF-8"?>
-                        <svg width="110px" height="177px" viewBox="0 0 110 177" version="1.1"
+                        <svg width="110px" height="177px" viewBox="0 0 110 177" version="1.1" v-if="diamond === 27"
                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                            <!-- Generator: Sketch 55.1 (78136) - https://sketchapp.com -->
+
                             <title>card-27copy</title>
                             <desc>Created with Sketch.</desc>
                             <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -107,9 +107,9 @@
                             </g>
                         </svg>
                     </div>
-                    <div class="card blue outline">
+                    <div class="card blue outline" id="club" @drop="sortDrop($event)" @dragenter.prevent="" @dragover.prevent>
                         <?xml version="1.0" encoding="UTF-8"?>
-                        <svg width="110px" height="177px" viewBox="0 0 110 177" version="1.1"
+                        <svg width="110px" height="177px" viewBox="0 0 110 177" version="1.1" v-if="club === 40"
                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                             <!-- Generator: Sketch 55.1 (78136) - https://sketchapp.com -->
                             <title>card-40copy</title>
@@ -139,13 +139,12 @@
             <div class="playArea">
                 <div class="downPile">
                     <ul class="coll" v-for="(list, index) in randomList" :id="'coll'+index">
-                        <ul class="coll" v-for="(card, index) in list" :id="card">
-                            <li>
-                                <img class="card orange" :src="imgPrefix+card+imgSuffix" :draggable="index+1 === list.length" :style="{'opacity':opacity}"
-                                    @dragstart="startDragging($event,card)"
-                                    @drop="dropAnotherCol($event)" @dragenter.prevent="" @dragover.prevent>
-                            </li>
-                        </ul>
+                        <li class="coll" v-for="(card, index) in list" :id="card">
+                            <img class="card orange" :src="imgPrefix+card+imgSuffix"
+                                :draggable="index+1 === list.length"
+                                @dragstart="startDragging($event,card)" @drop="dropAnotherCol($event)"
+                                @dragenter.prevent="" @dragover.prevent @dragend="updateCardLists">
+                        </li>
                     </ul>
                 </div>
             </div>

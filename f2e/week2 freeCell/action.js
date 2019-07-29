@@ -6,15 +6,16 @@ const app = new Vue({
         indexOfList: 0,
         imgPrefix: 'resource/CARDS/card-',
         imgSuffix: 'copy.svg',
-        opacity: 0,
-        spade: 0,
-        diamond: 0,
-        club: 0,
-        heart: 0,
+        opacity: 1,
+        spade: 1,
+        heart: 14,
+        diamond: 27,
+        club: 40,
     },
     methods: {
         // 亂數發牌
         randomCard: function () {
+            console.log('random card')
             const vm = this
             if (vm.randomList.length !== 0) {
                 vm.randomList = []
@@ -40,34 +41,123 @@ const app = new Vue({
             console.log("drop ", event)
             const vm = this
             const sourceId = event.dataTransfer.getData('text/plain')
-            const obj = document.getElementById(sourceId).childNodes[0].childNodes[0]
-            event.target.appendChild(obj)
-            // 移除陣列最後一位
-            vm.randomList[vm.indexOfList].pop()
+            const li = document.getElementById(sourceId)
+            const img = li.childNodes[0]
+            event.target.appendChild(img)
+            li.remove()
         },
         dropAnotherCol: function (event) {
             const vm = this
             const sourceId = event.dataTransfer.getData('text/plain')
-            const obj = document.getElementById(sourceId).childNodes[0].childNodes[0]
-            event.target.parentNode.parentNode.parentNode.appendChild(obj)
-            // 移除陣列最後一位
-            vm.randomList[vm.indexOfList].pop()
+            const li = document.getElementById(sourceId)
+            const img = li.childNodes[0]
+            const target = event.target.parentNode.parentNode
+            target.appendChild(li)
+            li.append(img)
+        },
+        sortDrop: function () {
+            const vm = this
+            const type = event.target.parentNode.id
+            console.log(event.target.parentNode)
+            const sourceId = event.dataTransfer.getData('text/plain')
+            // 0~13 spade | 14~26 heart | 27~39 diamond | 40~52 club
+            let sourceType;
+            let num
+            if (sourceId < 14) {
+                sourceType = 'spade'
+                num = vm.spade
+                console.log('result ', vm.checkSort(sourceType, type, sourceId, num))
+                if (vm.checkSort(sourceType, type, sourceId, num)) {
+                    vm.spade++
+                    vm.dropToStack(event.target, sourceId)
+                } else {
+                    return
+                }
+            } else if (sourceId > 13 && sourceId < 27) {
+                sourceType = 'heart'
+                num = vm.heart
+                console.log('result ', vm.checkSort(sourceType, type, sourceId, num))
+                if (vm.checkSort(sourceType, type, sourceId, num)) {
+                    vm.heart++
+                    vm.dropToStack(event.target, sourceId)
+                } else {
+                    return
+                }
+            } else if (sourceId > 26 && sourceId < 40) {
+                sourceType = 'diamond'
+                num = vm.diamond
+                console.log('result ', vm.checkSort(sourceType, type, sourceId, num))
+                if (vm.checkSort(sourceType, type, sourceId, num)) {
+                    vm.diamond++
+                    vm.dropToStack(event.target, sourceId)
+                } else {
+                    return
+                }
+            } else {
+                sourceType = 'club'
+                num = vm.club
+                console.log('result ', vm.checkSort(sourceType, type, sourceId, num))
+                if (vm.checkSort(sourceType, type, sourceId, num)) {
+                    vm.club++
+                    vm.dropToStack(event.target, sourceId)
+                    vm.randomList[vm.indexOfList].pop()
+                } else {
+                    return
+                }
+            }
         },
         startDragging: function (event, card) {
             // 開始拖動
             const vm = this
-            vm.changeOpacity(card, 0)
+            // vm.changeOpacity(card, 0)
             event.dataTransfer.setData('text/plain', card);
             console.log("dragstart ", event)
-            // 記錄當前欄位
-            const collId = document.getElementById(card).parentNode.id
-            const listIndex = parseInt(collId.replace("coll", ""));
-            vm.indexOfList = parseInt(listIndex)
-            console.log(vm.indexOfList)
         },
-        changeOpacity: function (card, num) {
-            document.getElementById(card).style.opacity = num
+        // changeOpacity: function (card, num) {
+        //     document.getElementById(card).style.opacity = num
+        // },
+        checkSort: function (source, target, sourceId, targetNum) {
+            console.log('source type: ', source)
+            console.log('target type: ', target)
+            console.log('sourceId ', sourceId)
+            const vm = this
+            if (source !== target) {
+                return false;
+            }
+            console.log('targetNum ', targetNum)
+            if (parseInt(sourceId) !== targetNum) {
+                return false
+            } else {
+                return true
+            }
         },
+        dropToStack: function (target, sourceId) {
+            console.log(target.parentNode)
+            const li = document.getElementById(sourceId)
+            const img = li.childNodes[0]
+            target.parentNode.append(img)
+            li.remove()
+        },
+        updateCardLists: function () {
+            const vm = this
+            let arr1 = [];
+            for (i = 0; i < 8; i++) {
+                let arr2 = []
+                // console.log('coll '+ i)
+                const nodes = document.getElementById('coll' + i).childNodes
+                // console.log(nodes)
+                for (j = 0; j < nodes.length; j++) {
+                    // console.log(nodes[j].id)
+                    arr2.push(nodes[j].id)
+                }
+                arr1.push(arr2)
+            }
+            vm.randomList = arr1
+        }
+
+    },
+    watch: {
+
     }
 })
 function pushList(vm, cardList, num) {
