@@ -50,11 +50,14 @@ const app = new Vue({
         dropAnotherCol: function (event) {
             const vm = this
             const sourceId = event.dataTransfer.getData('text/plain')
+            // check if correct
+            // if (!vm.checkCanDrop(parseInt(sourceId), parseInt(event.target.parentNode.id))) { return }
             const li = document.getElementById(sourceId)
             const img = li.childNodes[0]
             const target = event.target.parentNode.parentNode
             target.appendChild(li)
             li.append(img)
+            target.setAttribute('draggable', true)
         },
         sortDrop: function () {
             const vm = this
@@ -148,13 +151,45 @@ const app = new Vue({
                 const nodes = document.getElementById('coll' + i).childNodes
                 // console.log(nodes)
                 for (j = 0; j < nodes.length; j++) {
-                    // console.log(nodes[j].id)
-                    arr2.push(nodes[j].id)
+                    console.log(nodes[j].tagName)
+                    if (nodes[j].tagName === 'LI') {
+                        arr2.push(nodes[j].id)
+                    }
                 }
                 arr1.push(arr2)
             }
             vm.randomList = arr1
-        }
+        },
+        checkCanDrop: function (source, target) {
+            let sourceCardNum = source % 13
+            let sourceColor;
+            if (source > 13 && source < 39) {
+                sourceColor = 'red'
+            } else {
+                sourceColor = 'black'
+            }
+            let targetCardNum = target % 13
+            if (targetCardNum === 0) { targetCardNum = 13 }
+            let targetColor;
+            if (target > 13 && target < 39) {
+                targetColor = 'red'
+            } else {
+                targetColor = 'black'
+            }
+            console.log("target", targetCardNum)
+            console.log('source', sourceCardNum)
+            if (targetCardNum === sourceCardNum + 1) {
+                if (targetColor !== sourceColor) {
+                    console.log('true')
+                    return true
+                }
+                console.log('false')
+                return false
+            } else {
+                console.log('false')
+                return false
+            }
+        },
 
     },
     watch: {

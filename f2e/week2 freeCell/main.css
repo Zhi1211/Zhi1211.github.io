@@ -74,7 +74,8 @@ body {
     margin-top: 10px;
     width: 1280px;
     height: 800px;
-    border: 1px solid white;
+    /* border: 1px solid white; */
+    box-shadow: 1px 1px 10px #83A8BD;
 }
 
 .card {
@@ -202,4 +203,11 @@ ul,li {
 .coll {
     /* display: block; */
     height: 30px;
+}
+
+
+.placeholder {
+    border: rgba(131, 168, 189, 0.747) dashed 1px;
+    position: absolute;
+    z-index: 0;
 }

@@ -43,7 +43,7 @@
                 </div>
             </div>
         </div>
-        <div class="play" v-if="start === true">
+        <div class="play" v-if="start">
             <div class="filter" v-if="view !== ''"></div>
             <div class="upperRow">
                 <div class="pile">
@@ -141,8 +141,9 @@
                 </div>
             </div>
             <div class="playArea">
-                <div class="downPile">
+                <div class="downPile" style="z-index: 1">
                     <ul class="coll" v-for="(list, index) in randomList" :id="'coll'+index">
+                        <div class="card placeholder" v-if="list.length === 0"></div>
                         <li class="coll" v-for="(card, index) in list" :id="card">
                             <img class="card orange" :src="imgPrefix+card+imgSuffix"
                                 :draggable="index+1 === list.length" @dragstart="startDragging($event,card)"
@@ -159,7 +160,7 @@
                     <div class="funcs text" @click="view === 'rules' ? view = '' : view = 'rules'">RULES</div>
                     <div class="funcs text">UNDO</div>
                     <div class="funcs text" @click="view === 'newGame' ? view = '' : view = 'newGame'">NEW GAME</div>
-                    <div class="funcs text">HINT</div>
+                    <div class="funcs text" @click="randomCard">HINT</div>
                 </div>
                 <hr>
             </div>
