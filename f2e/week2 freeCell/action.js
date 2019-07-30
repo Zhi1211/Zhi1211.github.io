@@ -7,11 +7,7 @@ const app = new Vue({
         indexOfList: 0,
         imgPrefix: 'resource/CARDS/card-',
         imgSuffix: 'copy.svg',
-        opacity: 1,
-        spade: 1,
-        heart: 14,
-        diamond: 27,
-        club: 40,
+        opacity: 0,
     },
     methods: {
         // 亂數發牌
@@ -36,8 +32,8 @@ const app = new Vue({
             pushList(vm, cardList, 7)
             pushList(vm, cardList, 6)
         },
-        // 拖曳
-        drop: function (event) {
+        // 拖曳到左上
+        dropUpLeft: function (event) {
             // 放下卡片
             console.log("drop ", event)
             const vm = this
@@ -47,11 +43,12 @@ const app = new Vue({
             event.target.appendChild(img)
             li.remove()
         },
-        dropAnotherCol: function (event) {
+        // 下方拖曳
+        dropDownCol: function (event) {
             const vm = this
             const sourceId = event.dataTransfer.getData('text/plain')
             // check if correct
-            // if (!vm.checkCanDrop(parseInt(sourceId), parseInt(event.target.parentNode.id))) { return }
+            // if (!vm.checkDownCol(parseInt(sourceId), parseInt(event.target.parentNode.id))) { return }
             const li = document.getElementById(sourceId)
             const img = li.childNodes[0]
             const target = event.target.parentNode.parentNode
@@ -59,59 +56,23 @@ const app = new Vue({
             li.append(img)
             target.setAttribute('draggable', true)
         },
-        sortDrop: function () {
+        // 右上條件檢查
+        checkUpRight: function (event) {
             const vm = this
-            const type = event.target.parentNode.id
-            console.log(event.target.parentNode)
-            const sourceId = event.dataTransfer.getData('text/plain')
-            // 0~13 spade | 14~26 heart | 27~39 diamond | 40~52 club
-            let sourceType;
-            let num
-            if (sourceId < 14) {
-                sourceType = 'spade'
-                num = vm.spade
-                console.log('result ', vm.checkSort(sourceType, type, sourceId, num))
-                if (vm.checkSort(sourceType, type, sourceId, num)) {
-                    vm.spade++
-                    vm.dropToStack(event.target, sourceId)
-                } else {
-                    return
-                }
-            } else if (sourceId > 13 && sourceId < 27) {
-                sourceType = 'heart'
-                num = vm.heart
-                console.log('result ', vm.checkSort(sourceType, type, sourceId, num))
-                if (vm.checkSort(sourceType, type, sourceId, num)) {
-                    vm.heart++
-                    vm.dropToStack(event.target, sourceId)
-                } else {
-                    return
-                }
-            } else if (sourceId > 26 && sourceId < 40) {
-                sourceType = 'diamond'
-                num = vm.diamond
-                console.log('result ', vm.checkSort(sourceType, type, sourceId, num))
-                if (vm.checkSort(sourceType, type, sourceId, num)) {
-                    vm.diamond++
-                    vm.dropToStack(event.target, sourceId)
-                } else {
-                    return
-                }
-            } else {
-                sourceType = 'club'
-                num = vm.club
-                console.log('result ', vm.checkSort(sourceType, type, sourceId, num))
-                if (vm.checkSort(sourceType, type, sourceId, num)) {
-                    vm.club++
-                    vm.dropToStack(event.target, sourceId)
-                    vm.randomList[vm.indexOfList].pop()
-                } else {
-                    return
-                }
+            let sourceId = event.dataTransfer.getData('text/plain')
+            const sourceType = vm.getCardType(parseInt(sourceId))
+            let targetType = event.target.parentNode.id
+            const sourceCardNum = vm.getCardNum(sourceId)
+            const targetCardNum = parseInt(event.target.parentNode.dataset.num);
+            console.log(targetCardNum)
+
+            if (vm.checkUpRightDetail(sourceType, targetType, sourceCardNum, targetCardNum)) {
+                event.target.parentNode.dataset.num++
+                vm.dropUpRight(event.target, sourceId)
             }
         },
+        // 開始拖動
         startDragging: function (event, card) {
-            // 開始拖動
             const vm = this
             // vm.changeOpacity(card, 0)
             event.dataTransfer.setData('text/plain', card);
@@ -120,28 +81,36 @@ const app = new Vue({
         // changeOpacity: function (card, num) {
         //     document.getElementById(card).style.opacity = num
         // },
-        checkSort: function (source, target, sourceId, targetNum) {
-            console.log('source type: ', source)
-            console.log('target type: ', target)
-            console.log('sourceId ', sourceId)
+
+        // 右上條件檢查分支
+        checkUpRightDetail: function (sourceType, targetType, sourceCardNum, targetNum) {
             const vm = this
-            if (source !== target) {
+            if (sourceType !== targetType) {
+                console.log(sourceType + " | " + targetType)
                 return false;
             }
-            console.log('targetNum ', targetNum)
-            if (parseInt(sourceId) !== targetNum) {
+            if (sourceCardNum - 1 !== targetNum) {
+                console.log(sourceCardNum - 1)
+                console.log(sourceCardNum + " | " + targetNum)
                 return false
             } else {
                 return true
             }
         },
-        dropToStack: function (target, sourceId) {
-            console.log(target.parentNode)
+        // 拖曳到右上
+        dropUpRight: function (target, sourceId) {
+            // console.log("child nodes ", target.childNodes)
             const li = document.getElementById(sourceId)
             const img = li.childNodes[0]
-            target.parentNode.append(img)
+
+            if (target.parentNode.childNodes.length === 1) {
+                target.parentNode.replaceChild(img, target.parentNode.childNodes[0])
+            } else {
+                target.parentNode.append(img)
+            }
             li.remove()
         },
+        // 重新紀錄牌面
         updateCardLists: function () {
             const vm = this
             let arr1 = [];
@@ -151,7 +120,7 @@ const app = new Vue({
                 const nodes = document.getElementById('coll' + i).childNodes
                 // console.log(nodes)
                 for (j = 0; j < nodes.length; j++) {
-                    console.log(nodes[j].tagName)
+                    // console.log(nodes[j].tagName)
                     if (nodes[j].tagName === 'LI') {
                         arr2.push(nodes[j].id)
                     }
@@ -160,24 +129,15 @@ const app = new Vue({
             }
             vm.randomList = arr1
         },
-        checkCanDrop: function (source, target) {
-            let sourceCardNum = source % 13
-            let sourceColor;
-            if (source > 13 && source < 39) {
-                sourceColor = 'red'
-            } else {
-                sourceColor = 'black'
-            }
-            let targetCardNum = target % 13
-            if (targetCardNum === 0) { targetCardNum = 13 }
-            let targetColor;
-            if (target > 13 && target < 39) {
-                targetColor = 'red'
-            } else {
-                targetColor = 'black'
-            }
-            console.log("target", targetCardNum)
-            console.log('source', sourceCardNum)
+        // 下方條件檢查
+        checkDownCol: function (source, target) {
+            const vm = this
+            let sourceCardNum = vm.getCardNum(source)
+            let sourceColor = vm.getCardColor(source)
+
+            let targetCardNum = vm.getCardNum(target)
+            let targetColor = vm.getCardColor(target)
+
             if (targetCardNum === sourceCardNum + 1) {
                 if (targetColor !== sourceColor) {
                     console.log('true')
@@ -190,6 +150,24 @@ const app = new Vue({
                 return false
             }
         },
+        getCardType: function (num) {
+            // 0~13 spade | 14~26 heart | 27~39 diamond | 40~52 club
+            if (num <= 13) {
+                return 'spade'
+            } else if (num > 13 && num <= 26) {
+                return 'heart'
+            } else if (num > 26 && num <= 39) {
+                return 'diamond'
+            } else {
+                return 'club'
+            }
+        },
+        getCardNum: function (num) {
+            return num % 13 === 0 ? 13 : num % 13
+        },
+        getCardColor: function (num) {
+            return num > 13 && num < 40 ? 'red' : 'black'
+        }
 
     },
     watch: {
