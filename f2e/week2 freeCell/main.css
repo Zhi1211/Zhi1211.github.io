@@ -208,6 +208,6 @@ ul,li {
 
 .placeholder {
     border: rgba(131, 168, 189, 0.747) dashed 1px;
-    position: absolute;
-    z-index: 0;
+    /* position: relative;
+    z-index: 0; */
 }

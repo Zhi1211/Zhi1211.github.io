@@ -36,19 +36,30 @@ const app = new Vue({
             pushList(vm, cardList, 7)
             pushList(vm, cardList, 6)
         },
-        // 拖曳到左上
-        dropUpLeft: function (event) {
-            // if(event.target.childNodes.length >0){
-            //     return
-            // }
-            // 放下卡片
-            console.log("drop ", event.target)
+        // 開始拖動
+        startDragging: function (event, card) {
             const vm = this
-            const sourceId = event.dataTransfer.getData('text/plain')
+            // vm.changeOpacity(card, 0)
+            event.dataTransfer.setData('text/plain', card);
+            console.log("dragstart ", event)
+        },
+        // changeOpacity: function (card, num) {
+        //     document.getElementById(card).style.opacity = num
+        // },
+        // 拖曳到左上
+        dropUpLeft: function (target, sourceId) {
+            console.log('put')
             const li = document.getElementById(sourceId)
             const img = li.childNodes[0]
-            event.target.appendChild(img)
+            target.appendChild(img)
             li.remove()
+        },
+        checkUpLeft: function (event) {
+            const vm = this
+            if (event.target.tagName !== "IMG") {
+                const sourceId = event.dataTransfer.getData('text/plain')
+                vm.dropUpLeft(event.target, sourceId)
+            }
         },
         // 下方拖曳
         dropDownCol: function (event) {
@@ -78,20 +89,22 @@ const app = new Vue({
                 vm.dropUpRight(event.target, sourceId)
             }
         },
-        // 開始拖動
-        startDragging: function (event, card) {
-            const vm = this
-            // vm.changeOpacity(card, 0)
-            event.dataTransfer.setData('text/plain', card);
-            console.log("dragstart ", event)
+        // 拖曳到右上
+        dropUpRight: function (target, sourceId) {
+            const li = document.getElementById(sourceId)
+            const img = li.childNodes[0]
+
+            if (target.parentNode.childNodes.length === 1) {
+                target.parentNode.replaceChild(img, target.parentNode.childNodes[0])
+            } else {
+                target.parentNode.append(img)
+            }
+            li.remove()
         },
-        // changeOpacity: function (card, num) {
-        //     document.getElementById(card).style.opacity = num
-        // },
+
 
         // 右上條件檢查分支
         checkUpRightDetail: function (sourceType, targetType, sourceCardNum, targetNum) {
-            const vm = this
             if (sourceType !== targetType) {
                 console.log(sourceType + " | " + targetType)
                 return false;
@@ -104,19 +117,7 @@ const app = new Vue({
                 return true
             }
         },
-        // 拖曳到右上
-        dropUpRight: function (target, sourceId) {
-            // console.log("child nodes ", target.childNodes)
-            const li = document.getElementById(sourceId)
-            const img = li.childNodes[0]
 
-            if (target.parentNode.childNodes.length === 1) {
-                target.parentNode.replaceChild(img, target.parentNode.childNodes[0])
-            } else {
-                target.parentNode.append(img)
-            }
-            li.remove()
-        },
         // 重新紀錄牌面
         updateCardLists: function () {
             const vm = this
@@ -174,7 +175,7 @@ const app = new Vue({
         },
         getCardColor: function (num) {
             return num > 13 && num < 40 ? 'red' : 'black'
-        }
+        },
 
     },
     watch: {

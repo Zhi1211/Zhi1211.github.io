@@ -47,10 +47,10 @@
             <div class="filter" v-if="view !== ''"></div>
             <div class="upperRow">
                 <div class="pile">
-                    <div class="card orange outline" @drop="dropUpLeft($event)" @dragenter.prevent="" @dragover.prevent></div>
-                    <div class="card orange outline" @drop="dropUpLeft($event)" @dragenter.prevent="" @dragover.prevent></div>
-                    <div class="card orange outline" @drop="dropUpLeft($event)" @dragenter.prevent="" @dragover.prevent></div>
-                    <div class="card orange outline" @drop="dropUpLeft($event)" @dragenter.prevent="" @dragover.prevent></div>
+                    <div class="card orange outline" @drop="checkUpLeft($event)" @dragenter.prevent="" @dragover.prevent></div>
+                    <div class="card orange outline" @drop="checkUpLeft($event)" @dragenter.prevent="" @dragover.prevent></div>
+                    <div class="card orange outline" @drop="checkUpLeft($event)" @dragenter.prevent="" @dragover.prevent></div>
+                    <div class="card orange outline" @drop="checkUpLeft($event)" @dragenter.prevent="" @dragover.prevent></div>
                 </div>
                 <div class="pile">
                     <div class="card blue outline" id="spade" data-num="0" @drop="checkUpRight($event)" @dragenter.prevent=""
