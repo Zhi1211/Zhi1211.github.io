@@ -8,6 +8,10 @@ const app = new Vue({
         imgPrefix: 'resource/CARDS/card-',
         imgSuffix: 'copy.svg',
         opacity: 0,
+        spade: 0,
+        heart: 0,
+        diamond: 0,
+        club: 0,
     },
     methods: {
         // 亂數發牌
@@ -34,8 +38,11 @@ const app = new Vue({
         },
         // 拖曳到左上
         dropUpLeft: function (event) {
+            // if(event.target.childNodes.length >0){
+            //     return
+            // }
             // 放下卡片
-            console.log("drop ", event)
+            console.log("drop ", event.target)
             const vm = this
             const sourceId = event.dataTransfer.getData('text/plain')
             const li = document.getElementById(sourceId)
