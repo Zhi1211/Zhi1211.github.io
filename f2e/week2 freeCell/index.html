@@ -47,14 +47,18 @@
             <div class="filter" v-if="view !== ''"></div>
             <div class="upperRow">
                 <div class="pile">
-                    <div class="card orange outline" @drop="checkUpLeft($event)" @dragenter.prevent="" @dragover.prevent></div>
-                    <div class="card orange outline" @drop="checkUpLeft($event)" @dragenter.prevent="" @dragover.prevent></div>
-                    <div class="card orange outline" @drop="checkUpLeft($event)" @dragenter.prevent="" @dragover.prevent></div>
-                    <div class="card orange outline" @drop="checkUpLeft($event)" @dragenter.prevent="" @dragover.prevent></div>
+                    <div class="card orange outline" @drop="checkUpLeft($event)" @dragenter.prevent=""
+                        @dragover.prevent></div>
+                    <div class="card orange outline" @drop="checkUpLeft($event)" @dragenter.prevent=""
+                        @dragover.prevent></div>
+                    <div class="card orange outline" @drop="checkUpLeft($event)" @dragenter.prevent=""
+                        @dragover.prevent></div>
+                    <div class="card orange outline" @drop="checkUpLeft($event)" @dragenter.prevent=""
+                        @dragover.prevent></div>
                 </div>
                 <div class="pile">
-                    <div class="card blue outline" id="spade" data-num="0" @drop="checkUpRight($event)" @dragenter.prevent=""
-                        @dragover.prevent>
+                    <div class="card blue outline" id="spade" data-num="0" @drop="checkUpRight($event)"
+                        @dragenter.prevent="" @dragover.prevent>
                         <?xml version="1.0" encoding="UTF-8"?>
                         <svg width="110px" height="177px" viewBox="0 0 110 177" version="1.1" v-if="spade === 0"
                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -76,8 +80,8 @@
                             </g>
                         </svg>
                     </div>
-                    <div class="card blue outline" id="heart" data-num="0" @drop="checkUpRight($event)" @dragenter.prevent=""
-                        @dragover.prevent>
+                    <div class="card blue outline" id="heart" data-num="0" @drop="checkUpRight($event)"
+                        @dragenter.prevent="" @dragover.prevent>
                         <?xml version="1.0" encoding="UTF-8"?>
                         <svg width="110px" height="177px" viewBox="0 0 110 177" version="1.1" v-if="heart == 0"
                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -93,8 +97,8 @@
                             </g>
                         </svg>
                     </div>
-                    <div class="card blue outline" id="diamond" data-num="0" @drop="checkUpRight($event)" @dragenter.prevent=""
-                        @dragover.prevent>
+                    <div class="card blue outline" id="diamond" data-num="0" @drop="checkUpRight($event)"
+                        @dragenter.prevent="" @dragover.prevent>
                         <?xml version="1.0" encoding="UTF-8"?>
                         <svg width="110px" height="177px" viewBox="0 0 110 177" version="1.1" v-if="diamond === 0"
                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -110,8 +114,8 @@
                             </g>
                         </svg>
                     </div>
-                    <div class="card blue outline" id="club" data-num="0" @drop="checkUpRight($event)" @dragenter.prevent=""
-                        @dragover.prevent>
+                    <div class="card blue outline" id="club" data-num="0" @drop="checkUpRight($event)"
+                        @dragenter.prevent="" @dragover.prevent>
                         <?xml version="1.0" encoding="UTF-8"?>
                         <svg width="110px" height="177px" viewBox="0 0 110 177" version="1.1" v-if="club === 0"
                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -142,14 +146,16 @@
             </div>
             <div class="playArea">
                 <div class="downPile" style="z-index: 1">
-                    <ul class="coll" v-for="(list, index) in randomList" :id="'coll'+index">
-                        <div class="card placeholder" v-if="list.length === 0"></div>
-                        <li class="coll" v-for="(card, index) in list" :id="card">
-                            <img class="card orange" :src="imgPrefix+card+imgSuffix"
-                                :draggable="index+1 === list.length" @dragstart="startDragging($event,card)"
-                                @drop="dropDownCol($event)" @dragenter.prevent="" @dragover.prevent
-                                @dragend="updateCardLists">
-                        </li>
+                    <ul class="coll" v-for="(coll, index) in randomList" :id="'coll'+index">
+                        <div class="card placeholder" v-if="coll.length === 0"></div>
+                        <div v-for="(group, index) in coll">
+                            <li v-for="(card, i) in group" class="group coll" :draggable="index+1 === coll.length">
+                                <img class="card orange overlap" :src="imgPrefix+card+imgSuffix" :id="card" :class="['overlap'+i]"
+                                    @dragstart="startDragging($event,card)"
+                                    @drop="dropDownCol($event)" @dragenter.prevent="" @dragover.prevent
+                                    @dragend="updateCardLists">
+                            </li>
+                        </div>
                     </ul>
                 </div>
             </div>
@@ -268,7 +274,6 @@
             </div>
         </div>
     </div>
-
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="action.js"></script>
 </body>

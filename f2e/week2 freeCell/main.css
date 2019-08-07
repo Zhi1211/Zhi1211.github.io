@@ -83,7 +83,7 @@ body {
     width: 109px;
     height: 176.5px;
     box-shadow: -1px -1px 1px #2430375e;
-    /* background-color: white; */
+    background-color: white;
 }
 .outline {
     border: 1px solid;
@@ -201,13 +201,15 @@ ul,li {
 }
 
 .coll {
-    /* display: block; */
     height: 30px;
 }
-
-
 .placeholder {
     border: rgba(131, 168, 189, 0.747) dashed 1px;
     /* position: relative;
     z-index: 0; */
+}
+
+.overlap0 {
+    display: flex;
+    position: relative;
 }

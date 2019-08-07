@@ -33,8 +33,18 @@ const app = new Vue({
                 cardList[m] = cardList[i];
                 cardList[i] = t;
             }
-            pushList(vm, cardList, 7)
-            pushList(vm, cardList, 6)
+            vm.pushList(vm, cardList, 7)
+            vm.pushList(vm, cardList, 6)
+        },
+        pushList: function (vm, cardList, num) {
+            for (i = 0; i < 4; i++) {
+                let secondArr = []
+                for (j = 0; j < num; j++) {
+                    const thirdArr = cardList.splice(0, 1)
+                    secondArr.push(thirdArr)
+                }
+                vm.randomList.push(secondArr)
+            }
         },
         // 開始拖動
         startDragging: function (event, card) {
@@ -49,16 +59,17 @@ const app = new Vue({
         // 拖曳到左上
         dropUpLeft: function (target, sourceId) {
             console.log('put')
-            const li = document.getElementById(sourceId)
-            const img = li.childNodes[0]
+            const img = document.getElementById(sourceId)
             target.appendChild(img)
-            li.remove()
         },
         checkUpLeft: function (event) {
+            console.log('event.target ',event.target.tagName)
             const vm = this
             if (event.target.tagName !== "IMG") {
                 const sourceId = event.dataTransfer.getData('text/plain')
                 vm.dropUpLeft(event.target, sourceId)
+            }else{
+                return
             }
         },
         // 下方拖曳
@@ -67,12 +78,12 @@ const app = new Vue({
             const sourceId = event.dataTransfer.getData('text/plain')
             // check if correct
             // if (!vm.checkDownCol(parseInt(sourceId), parseInt(event.target.parentNode.id))) { return }
-            const li = document.getElementById(sourceId)
-            const img = li.childNodes[0]
-            const target = event.target.parentNode.parentNode
-            target.appendChild(li)
-            li.append(img)
-            target.setAttribute('draggable', true)
+            const img = document.getElementById(sourceId)
+            const target = event.target.parentNode
+            console.log('target ',target)
+            target.appendChild(img)
+
+            // target.setAttribute('draggable', true)
         },
         // 右上條件檢查
         checkUpRight: function (event) {
@@ -91,18 +102,14 @@ const app = new Vue({
         },
         // 拖曳到右上
         dropUpRight: function (target, sourceId) {
-            const li = document.getElementById(sourceId)
-            const img = li.childNodes[0]
+            const img = document.getElementById(sourceId)
 
             if (target.parentNode.childNodes.length === 1) {
                 target.parentNode.replaceChild(img, target.parentNode.childNodes[0])
             } else {
                 target.parentNode.append(img)
             }
-            li.remove()
         },
-
-
         // 右上條件檢查分支
         checkUpRightDetail: function (sourceType, targetType, sourceCardNum, targetNum) {
             if (sourceType !== targetType) {
@@ -117,25 +124,32 @@ const app = new Vue({
                 return true
             }
         },
-
         // 重新紀錄牌面
         updateCardLists: function () {
+            console.log('update')
             const vm = this
-            let arr1 = [];
+            let firstArr = [];
             for (i = 0; i < 8; i++) {
-                let arr2 = []
-                // console.log('coll '+ i)
-                const nodes = document.getElementById('coll' + i).childNodes
-                // console.log(nodes)
-                for (j = 0; j < nodes.length; j++) {
-                    // console.log(nodes[j].tagName)
-                    if (nodes[j].tagName === 'LI') {
-                        arr2.push(nodes[j].id)
+                let collArr = []
+                let coll = document.getElementById('coll' + i)
+                coll.childNodes.forEach(div => {
+                    if (div.childNodes.length > 0) {
+                        div.childNodes.forEach(li => {
+                            let groupArr = []
+                            li.childNodes.forEach(img => {
+                                if (img.tagName === 'IMG') {
+                                    groupArr.push(img.id)
+                                }
+                            })
+                            if (groupArr.length > 0) {
+                                collArr.push(groupArr)
+                            }
+                        })
                     }
-                }
-                arr1.push(arr2)
+                })
+                firstArr.push(collArr)
             }
-            vm.randomList = arr1
+            console.log(firstArr)
         },
         // 下方條件檢查
         checkDownCol: function (source, target) {
@@ -185,12 +199,7 @@ const app = new Vue({
         }
     }
 })
-function pushList(vm, cardList, num) {
-    for (i = 0; i < 4; i++) {
-        const arr = cardList.splice(0, num)
-        vm.randomList.push(arr)
-    }
-}
+
 
 
 
